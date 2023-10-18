@@ -32,7 +32,7 @@ export const GetCompanybycode = (code) => {
 export const CreateCompany = (data) => {
     return (dispatch) => {
         axios.post("https://jsonplaceholder.typicode.com/users", data).then(res => {
-            dispatch(AddRequest(data));
+            dispatch(AddRequest(res.data));
             toast.success('Data created successfully.')
         }).catch(err => {
             toast.error('Failed to create data due to :' + err.message)
@@ -43,7 +43,7 @@ export const CreateCompany = (data) => {
 export const UpdateCompany = (data) => {
     return (dispatch) => {
         axios.put("https://jsonplaceholder.typicode.com/users/"+data.id, data).then(res => {
-            dispatch(UpdateRequest(data));
+            dispatch(UpdateRequest(res.data));
             toast.success('Data updated successfully.')
         }).catch(err => {
             toast.error('Failed to update data due to :' + err.message)
