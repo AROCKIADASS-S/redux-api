@@ -67,6 +67,12 @@ const Company = (props) => {
     }
   }, [editobj]);
 
+  useEffect(() => {
+    // Update component based on changes in companylist
+    console.log('Company list updated:', companylist);
+    // ... update component state or UI
+  }, [companylist]);
+
   const handlepagechange = (newpage) => {
     pagechange(newpage);
   };

@@ -15,6 +15,10 @@ export const makeRequest = () => {
   };
 };
 
+export const AddRequest = (data) => ({ type: ADD_REQUEST, payload: data });
+
+export const UpdateRequest = (data) => ({ type: UPDATE_REQUEST, payload: data });
+
 export const getAllRequestSuccess = (data) => {
   return {
     type: REQ_GETALL_SUCC,
