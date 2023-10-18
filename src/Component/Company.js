@@ -37,22 +37,8 @@ const Company = (props) => {
     { id: "action", name: "Action" },
   ];
 
-  const { register } = useForm ();
-  // const {
-  //   register,
-  //   // formState: { errors },
-  // } = useForm({
-  //   // defaultValues: {
-  //   //   id: "",
-  //   //   name: "",
-  //   //   email: "",
-  //   //   phone: "",
-  //   // },
-  // });
-  // const onSubmit = (data) => {
-  //   console.log(data);
-  // };
-  // const onSubmit = data => props.updateAction(data);
+  const { register, handleSubmit, formState: { errors}, } = useForm ();
+ 
 
   const dispatch = useDispatch();
 
@@ -104,14 +90,16 @@ const Company = (props) => {
     dispatch(OpenPopup());
   };
   const handlesubmit = (e) => {
-    e.preventDefault();
-    const _obj = { id, name, email, phone };
-    if (isedit) {
-      dispatch(UpdateCompany(_obj));
-    } else {
-      dispatch(CreateCompany(_obj));
+    if (e && e.preventDefault){
+      e.preventDefault();
+      const _obj = { id, name, email, phone };
+      if (isedit) {
+        dispatch(UpdateCompany(_obj));
+      } else {
+        dispatch(CreateCompany(_obj));
+      }
+      closepopup();
     }
-    closepopup();
   };
 
   const handleEdit = (code) => {
@@ -222,37 +210,37 @@ const Company = (props) => {
           </IconButton>
         </DialogTitle>
         <DialogContent>
-          <form onSubmit={handlesubmit}>
+          <form onSubmit={handleSubmit(handlesubmit)}>
             <Stack spacing={2} margin={2}>
               <TextField
-                // required
-                // error={name.length === 0}
+                required
+                error={errors.name}
                 value={name}
                 onChange={(e) => {
                   namechange(e.target.value);
                 }}
                 variant="outlined"
-                label="Name" {...register("name", { required: "Name is required"})}
+                label="Name" {...register('name')}
               ></TextField>
               <TextField
-                // required
-                // error={name.length === 0}
+                required
+                error={errors.email}
                 value={email}
                 onChange={(e) => {
                   emailchange(e.target.value);
                 }}
                 variant="outlined"
-                label="Email" {...register("email", { required: "Email is required"})}
+                label="Email" {...register('email')}
               ></TextField>
               <TextField
-                // required
-                // error={name.length === 0}
+                required
+                error={errors.phone}
                 value={phone}
                 onChange={(e) => {
                   phonechange(e.target.value);
                 }}
                 variant="outlined"
-                label="Phone" {...register("phone", { required: "Phone Number is required"})}
+                label="Phone" {...register('phone')}
               ></TextField>
               <Button variant="contained" type="submit">
                 Submit
@@ -260,44 +248,6 @@ const Company = (props) => {
             </Stack>
           </form>
           </DialogContent>
-        {/* <form onSubmit={()}>
-          <Stack spacing={2} margin={2}>
-            <input
-              {...register("name", { required: true })}
-              aria-invalid={errors.name ? "true" : "false"}
-              value={name}
-              onChange={(e) => {
-                namechange(e.target.value);
-              }}
-              variant="outlined"
-              label="Name"
-            />
-            <input
-              {...register("email", { required: "Email Address is required" })}
-              aria-invalid={errors.email ? "true" : "false"}
-              value={email}
-              onChange={(e) => {
-                emailchange(e.target.value);
-              }}
-              variant="outlined"
-              label="Email"
-            />
-            <input
-              {...register("phone", { required: "Phone Number is required" })}
-              aria-invalid={errors.phone ? "true" : "false"}
-              value={phone}
-              onChange={(e) => {
-                phonechange(e.target.value);
-              }}
-              variant="outlined"
-              label="Phone"
-            />
-
-            <Button variant="contained" type="submit">
-              Submit
-            </Button>
-          </Stack>
-        </form> */}
       </Dialog>
     </div>
   );
